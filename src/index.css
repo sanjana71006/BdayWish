@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations and helpers used by the app */
+.typing-text {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 0.12em solid rgba(255,255,255,0.6);
+  animation: typing 3.6s steps(40, end), blink 0.8s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.animate-glow {
+  animation: glow 2.2s ease-in-out infinite;
+  text-shadow: 0 0 8px rgba(255,255,255,0.85), 0 0 18px rgba(139,92,246,0.5);
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 6px rgba(255,255,255,0.6); }
+  50% { text-shadow: 0 0 18px rgba(255,255,255,0.95); }
+  100% { text-shadow: 0 0 6px rgba(255,255,255,0.6); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.08); }
+  40% { transform: scale(0.98); }
+  60% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Small utilities used by some elements */
+.backdrop-blur-xl { backdrop-filter: blur(10px); }
+
+/* Flip card styles */
+.flip-card {
+  perspective: 1000px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+.card-finger {
+  font-size: 2.2rem;
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gift-box {
+  font-size: 3rem;
+}
+
+/* Finger invite animation */
+.finger-svg {
+  width: 44px;
+  height: 44px;
+  transform-origin: center bottom;
+  animation: finger-pulse 1.6s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.finger-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 32px;
+  line-height: 1;
+  transform-origin: center bottom;
+  animation: finger-pulse 1.6s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes finger-pulse {
+  0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+  40% { transform: translateY(-6px) scale(1.06); filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12)); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Tap ripple effect behind the finger */
+.finger-ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.9), rgba(255,255,255,0.2));
+  opacity: 0.0;
+  pointer-events: none;
+}
+
+.finger-ripple.animate {
+  animation: ripple-pop 420ms ease-out forwards;
+}
+
+@keyframes ripple-pop {
+  0% { opacity: 0.9; transform: scale(0.6); }
+  60% { opacity: 0.5; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 640px) {
+  .finger-svg, .finger-emoji {
+    width: 56px;
+    height: 56px;
+    font-size: 36px;
+  }
+  .finger-ripple {
+    width: 96px;
+    height: 96px;
+  }
+  .flip-card {
+    /* placeholder in case we need mobile-specific flip adjustments */
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+  .touch-target { padding: 6px; }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .finger-svg, .finger-emoji {
+    width: 52px;
+    height: 52px;
+    font-size: 34px;
+  }
+  .finger-ripple { width: 80px; height: 80px; }
+}
